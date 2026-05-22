@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interview Q&A – Insurance Project</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #21262d;
+    --accent: #e6a817;
+    --green: #3fb68b;
+    --blue: #5b8dee;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --soft: #c9d1d9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    padding-bottom: 80px;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0d1117, #1a1f2e);
+    border-bottom: 1px solid var(--border);
+    padding: 50px 24px 36px;
+    text-align: center;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(230,168,23,0.15);
+    border: 1px solid rgba(230,168,23,0.4);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-size: clamp(24px, 5vw, 44px);
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  header h1 span { color: var(--accent); }
+  header p {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-num { font-size: 26px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+
+  .toc {
+    max-width: 820px;
+    margin: 32px auto 0;
+    padding: 0 20px;
+  }
+  .toc h2 { font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .toc-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .toc-item:hover { border-color: var(--accent); color: var(--text); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  .content { max-width: 820px; margin: 0 auto; padding: 32px 20px 0; }
+
+  .section { margin-bottom: 44px; }
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .sec-title { font-size: 20px; font-weight: 800; }
+  .sec-count {
+    margin-left: auto;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    background: #1f2937;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(230,168,23,0.35); }
+
+  .card-q {
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .qnum {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 26px;
+    padding-top: 2px;
+  }
+  .qtext {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.5;
+  }
+  .arrow {
+    color: var(--muted);
+    font-size: 11px;
+    padding-top: 4px;
+    flex-shrink: 0;
+    transition: transform 0.25s;
+  }
+  .card.open .arrow { transform: rotate(180deg); }
+
+  .card-a {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 16px 18px 20px 56px;
+  }
+  .card.open .card-a { display: block; }
+
+  /* Answer line styles */
+  .line {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--soft);
+    line-height: 1.65;
+  }
+  .line:last-child { margin-bottom: 0; }
+  .bullet {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+  .bullet.g { background: var(--green); }
+  .bullet.b { background: var(--blue); }
+
+  .label {
+    display: inline-block;
+    background: rgba(230,168,23,0.12);
+    border: 1px solid rgba(230,168,23,0.3);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 5px;
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+  .label.g { background: rgba(63,182,139,0.12); border-color: rgba(63,182,139,0.3); color: var(--green); }
+  .label.b { background: rgba(91,141,238,0.12); border-color: rgba(91,141,238,0.3); color: var(--blue); }
+
+  .tip {
+    background: rgba(63,182,139,0.08);
+    border-left: 3px solid var(--green);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  footer {
+    text-align: center;
+    padding: 36px;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  .bg-y { background: rgba(230,168,23,0.15); color: var(--accent); }
+  .bg-g { background: rgba(63,182,139,0.15); color: var(--green); }
+  .bg-b { background: rgba(91,141,238,0.15); color: var(--blue); }
+  .bg-p { background: rgba(163,113,247,0.15); color: #a371f7; }
+  .bg-r { background: rgba(240,100,120,0.15); color: #f06478; }
+  .bg-o { background: rgba(240,150,60,0.15); color: #f0963c; }
+  .bg-t { background: rgba(56,200,210,0.15); color: #38c8d2; }
+  .t-y { color: var(--accent); }
+  .t-g { color: var(--green); }
+  .t-b { color: var(--blue); }
+  .t-p { color: #a371f7; }
+  .t-r { color: #f06478; }
+  .t-o { color: #f0963c; }
+  .t-t { color: #38c8d2; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Infosys Springboard — Interview Prep</div>
+  <h1>CoverMate <span>Interview Q&amp;A</span></h1>
+  <p>Very short. Very simple. Even if your English is basic — you can read, understand, and remember every answer here.</p>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">55+</div><div class="stat-label">Questions</div></div>
+  <div class="stat"><div class="stat-num">7</div><div class="stat-label">Topics</div></div>
+  <div class="stat"><div class="stat-num">8</div><div class="stat-label">Weeks</div></div>
+  <div class="stat"><div class="stat-num">360°</div><div class="stat-label">Coverage</div></div>
+</div>
+
+<div class="toc">
+  <h2>Jump to a Topic</h2>
+  <div class="toc-grid">
+    <a href="#s1" class="toc-item"><div class="dot" style="background:var(--accent)"></div>Project Overview</a>
+    <a href="#s2" class="toc-item"><div class="dot" style="background:var(--green)"></div>Backend &amp; FastAPI</a>
+    <a href="#s3" class="toc-item"><div class="dot" style="background:var(--blue)"></div>Database</a>
+    <a href="#s4" class="toc-item"><div class="dot" style="background:#f06478"></div>Login &amp; Security</a>
+    <a href="#s5" class="toc-item"><div class="dot" style="background:#a371f7"></div>Google Drive &amp; Files</a>
+    <a href="#s6" class="toc-item"><div class="dot" style="background:#f0963c"></div>Frontend &amp; React</a>
+    <a href="#s7" class="toc-item"><div class="dot" style="background:#38c8d2"></div>Internship &amp; Soft Skills</a>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ========== SECTION 1 ========== -->
+<div class="section" id="s1">
+  <div class="sec-head">
+    <div class="sec-icon bg-y">📋</div>
+    <div class="sec-title t-y">Project Overview</div>
+    <div class="sec-count">12 Q</div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q1</span><span class="qtext">Tell me about your project.</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>My project name is <strong>CoverMate</strong>.</span></div>
+      <div class="line"><div class="bullet"></div><span>It is an insurance web application.</span></div>
+      <div class="line"><div class="bullet"></div><span>I got this project from <strong>Infosys Springboard</strong> as my internship project.</span></div>
+      <div class="line"><div class="bullet"></div><span>My mentor gave me a full document. That document said what to build each week.</span></div>
+      <div class="line"><div class="bullet"></div><span>I followed that document exactly. I only changed one thing — I used <strong>Google Drive</strong> instead of AWS S3 for file storage.</span></div>
+      <div class="line"><div class="bullet"></div><span>In this app, users can see insurance policies and compare them.</span></div>
+      <div class="line"><div class="bullet"></div><span>The app suggests the best policy for each user.</span></div>
+      <div class="line"><div class="bullet"></div><span>Users can file a claim and upload documents.</span></div>
+      <div class="line"><div class="bullet"></div><span>Users can check the status of their claim anytime.</span></div>
+      <div class="line"><div class="bullet"></div><span>Admin can see all claims and check for fake or suspicious ones.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q2</span><span class="qtext">What technologies did you use?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>These technologies were given in the project document by my Infosys mentor.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">React.js</span> — I used this to build all the web pages.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">FastAPI</span> — I used this to build the backend. It handles all the logic.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">PostgreSQL</span> — I used this as the database. It stores all data.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">JWT</span> — I used this for login and user security.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Celery</span> — I used this to send emails in the background.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Google Drive</span> — I used this to store uploaded files. The document said AWS S3. I changed only this one thing because Google Drive is free and does the same job.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q3</span><span class="qtext">What are the 5 modules in your project?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>The document divided the project into 5 modules.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Module A</span> Login, signup, and user profile.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Module B</span> Show all policies, compare policies, see price.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Module C</span> Recommend best policies for each user.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Module D</span> File a claim, upload documents, track claim status.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Module E</span> Detect fake claims. Admin dashboard and reports.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q4</span><span class="qtext">Can you explain the 8-week plan?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>My Infosys mentor gave me a week-by-week plan in the document.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 1</span> Built login, signup, and set up database tables. Added sample policy data.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 2</span> Built the policy list page and compare page.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 3</span> Built the form where users fill in their age, income, and health details.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 4</span> Built the recommendation engine. It scores policies and shows the top 5.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 5</span> Built the claim filing form and file upload with Google Drive.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 6</span> Built claim status tracking. Set up email notifications using Celery.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 7</span> Built fraud detection rules. It checks each new claim automatically.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Week 8</span> Built admin dashboard, CSV export, and did final testing.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q5</span><span class="qtext">Is this a full stack project? What did you build?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>Yes. This is a full stack project.</span></div>
+      <div class="line"><div class="bullet"></div><span>Full stack means I built both — what the user sees and what works behind the screen.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Frontend</span> All web pages using React.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Backend</span> All APIs using FastAPI and Python.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Database</span> All tables using PostgreSQL.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Files</span> Google Drive for uploading claim documents.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Emails</span> Celery for background email sending.</span></div>
+      <div class="line"><div class="bullet"></div><span>It was an individual project. But I had daily meetings where I could ask my mentor or team for help.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q6</span><span class="qtext">What is a REST API? Does your project use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>REST API is how the frontend and backend talk to each other.</span></div>
+      <div class="line"><div class="bullet"></div><span>Think of it like ordering food. You tell the waiter what you want. The waiter brings it from the kitchen.</span></div>
+      <div class="line"><div class="bullet"></div><span>Here — React is the customer. FastAPI is the waiter. Database is the kitchen.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">GET</span> means "give me some data." No change happens.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">POST</span> means "save this new data."</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">PUT</span> means "update this existing data."</span></div>
+      <div class="line"><div class="bullet"></div><span>Yes. My project uses REST API everywhere.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q7</span><span class="qtext">What is CORS? Why did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>CORS is a browser safety rule.</span></div>
+      <div class="line"><div class="bullet"></div><span>By default, a browser blocks two different addresses from talking to each other.</span></div>
+      <div class="line"><div class="bullet"></div><span>My React runs at <strong>localhost:3000</strong>. My FastAPI runs at <strong>localhost:8000</strong>. These are two different addresses.</span></div>
+      <div class="line"><div class="bullet"></div><span>So the browser was blocking them.</span></div>
+      <div class="line"><div class="bullet"></div><span>I added CORS settings in FastAPI. I said — allow requests from localhost:3000.</span></div>
+      <div class="line"><div class="bullet"></div><span>After that, they can talk to each other without any problem.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q8</span><span class="qtext">What is the difference between frontend and backend?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span><span class="label">Frontend</span> What the user sees on the screen. Buttons, forms, pages.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Backend</span> What works behind the screen. Logic, database, and APIs.</span></div>
+      <div class="line"><div class="bullet"></div><span>User clicks a button on the frontend.</span></div>
+      <div class="line"><div class="bullet"></div><span>Frontend sends data to the backend.</span></div>
+      <div class="line"><div class="bullet"></div><span>Backend saves data in the database and sends a reply.</span></div>
+      <div class="line"><div class="bullet"></div><span>Frontend shows the reply to the user.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q9</span><span class="qtext">What types of insurance policies does your app support?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>This was given in the project document. There are 5 types.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Auto</span> For cars and bikes.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Health</span> For hospital bills.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Life</span> To protect the family.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Home</span> For house damage or theft.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Travel</span> For trips and flights.</span></div>
+      <div class="line"><div class="bullet"></div><span>Only these 5 are allowed in the database. Any other value is rejected.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q10</span><span class="qtext">How is your app different from a normal insurance website?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>A normal website just shows a list of policies.</span></div>
+      <div class="line"><div class="bullet"></div><span>My app does 3 extra things.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">1</span> It suggests the best policies for each user based on their age, income, and health.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">2</span> It checks every new claim automatically for fraud.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">3</span> It sends an email to the user when the claim status is updated.</span></div>
+      <div class="line"><div class="bullet"></div><span>All 3 of these were part of the project document from Infosys Springboard.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q11</span><span class="qtext">The document was given by mentor. Did you do the work yourself?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>Yes. I did all the work myself.</span></div>
+      <div class="line"><div class="bullet"></div><span>The document told me what to build. Like a blueprint for a house.</span></div>
+      <div class="line"><div class="bullet"></div><span>But I wrote every line of code myself.</span></div>
+      <div class="line"><div class="bullet"></div><span>I built all the database tables myself.</span></div>
+      <div class="line"><div class="bullet"></div><span>I wrote the fraud detection logic myself.</span></div>
+      <div class="line"><div class="bullet"></div><span>I connected Google Drive myself.</span></div>
+      <div class="line"><div class="bullet"></div><span>I built every page in React myself.</span></div>
+      <div class="line"><div class="bullet"></div><span>The document gave direction. The actual coding — I did it all.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q12</span><span class="qtext">What would you improve if you had more time?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I would make 5 improvements.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">1</span> Add a proper role for users — admin or user — stored in the database.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">2</span> Move secret keys out of the code and put them in a private file.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">3</span> Replace Google Drive with AWS S3 for production use, as the document originally said.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">4</span> Add automated tests so I can check if something breaks when I change code.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">5</span> Deploy the app on a real server so anyone can use it from the internet.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 2 ========== -->
+<div class="section" id="s2">
+  <div class="sec-head">
+    <div class="sec-icon bg-g">⚙️</div>
+    <div class="sec-title t-g">Backend — FastAPI &amp; Python</div>
+    <div class="sec-count">12 Q</div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q13</span><span class="qtext">Why did you use FastAPI and not Flask or Django?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>FastAPI was mentioned in the document. So I used it.</span></div>
+      <div class="line"><div class="bullet g"></div><span>But I also understand why it is good.</span></div>
+      <div class="line"><div class="bullet g"></div><span>FastAPI has a testing page at <strong>/docs</strong>. I can test all my APIs there — no extra work.</span></div>
+      <div class="line"><div class="bullet g"></div><span>FastAPI checks data automatically. If wrong data comes in, it gives a clear error.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Flask is simple but has fewer features. Django is too big for this project.</span></div>
+      <div class="line"><div class="bullet g"></div><span>FastAPI was the right fit.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q14</span><span class="qtext">What is a router in FastAPI?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>A router splits the code into separate files.</span></div>
+      <div class="line"><div class="bullet g"></div><span>I did not put all APIs in one big file. That would be messy.</span></div>
+      <div class="line"><div class="bullet g"></div><span>I made separate files. <strong>claims.py</strong> for claims. <strong>admin.py</strong> for admin. <strong>policies.py</strong> for policies.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Each file has its own router.</span></div>
+      <div class="line"><div class="bullet g"></div><span>In <strong>main.py</strong>, I join all routers together.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Now the code is clean. Easy to find. Easy to fix.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q15</span><span class="qtext">What is Pydantic? Why did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>Pydantic checks if the data sent by the user is correct.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Example: when filing a claim, the user must send amount, type, and date.</span></div>
+      <div class="line"><div class="bullet g"></div><span>If they forget one — Pydantic gives an error message automatically.</span></div>
+      <div class="line"><div class="bullet g"></div><span>If they send wrong type — like a word instead of a number — Pydantic catches it.</span></div>
+      <div class="line"><div class="bullet g"></div><span>I wrote these rules in <strong>schemas.py</strong>.</span></div>
+      <div class="line"><div class="bullet g"></div><span>FastAPI uses them automatically. I do not have to write checking code in every API.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q16</span><span class="qtext">What is Celery? Why did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>Celery runs tasks in the background.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Sending an email takes a few seconds.</span></div>
+      <div class="line"><div class="bullet g"></div><span>If I send the email inside the API — the admin has to wait. That feels slow.</span></div>
+      <div class="line"><div class="bullet g"></div><span>With Celery — the API replies to admin immediately. Done!</span></div>
+      <div class="line"><div class="bullet g"></div><span>Then Celery sends the email quietly in the background.</span></div>
+      <div class="line"><div class="bullet g"></div><span>The admin does not wait. The app feels fast.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Celery was mentioned in the project document. I built it exactly as described.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q17</span><span class="qtext">How does fraud detection work in your project?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>When a user files a claim, 4 checks run automatically.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">Rule 1</span> If the amount is more than ₹1 lakh — flag it. High risk.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">Rule 2</span> If the claim is filed within 7 days of buying the policy — flag it. Too fast.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">Rule 3</span> If the same amount was claimed before for the same policy — flag it. Looks like a copy.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">Rule 4</span> If 2 or more claims are filed within 3 days — flag it. High risk.</span></div>
+      <div class="line"><div class="bullet g"></div><span>If a high risk flag is found — the claim status changes to "under review" automatically.</span></div>
+      <div class="line"><div class="bullet g"></div><span>All flags are saved in the database. Admin can see them.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q18</span><span class="qtext">How does the recommendation engine work?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>The recommendation engine gives a score to each policy for the user.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Higher score = better match for that user.</span></div>
+      <div class="line"><div class="bullet g"></div><span>It looks at the user's age, income, family size, and health condition.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">+25 points</span> If the policy price is less than 5% of yearly income. It is affordable.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">+20 points</span> If the user is high risk and the policy has low deductible. Good coverage.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">+10 points</span> If the user has 2 or more family members.</span></div>
+      <div class="line"><div class="bullet g"></div><span>Top 5 policies by score are shown to the user with a reason.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q19</span><span class="qtext">What is SQLAlchemy? How did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>SQLAlchemy lets me use Python to work with the database.</span></div>
+      <div class="line"><div class="bullet g"></div><span>I do not have to write SQL commands directly.</span></div>
+      <div class="line"><div class="bullet g"></div><span>I wrote Python classes in <strong>models.py</strong>. Each class is one database table.</span></div>
+      <div class="line"><div class="bullet g"></div><span>To save a new claim — I write <strong>db.add(new_claim)</strong>. SQLAlchemy does the rest.</span></div>
+      <div class="line"><div class="bullet g"></div><span>It is cleaner. It is safer. It is easier to read.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q20</span><span class="qtext">What is dependency injection in FastAPI?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>Dependency injection means FastAPI gives the function what it needs automatically.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">Example 1</span> I write <strong>db = Depends(get_db)</strong>. FastAPI opens the database connection for me. I do not have to open or close it myself.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">Example 2</span> I write <strong>current_user = Depends(get_current_user)</strong>. FastAPI reads the token and gives me the user. I do not write this in every API.</span></div>
+      <div class="line"><div class="bullet g"></div><span>It removes repeated code. It keeps things clean.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q21</span><span class="qtext">What does db.commit() and db.rollback() do?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>Think of the database like a notebook.</span></div>
+      <div class="line"><div class="bullet g"></div><span>When you write something — it is in pencil first. Not saved yet.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">db.commit()</span> = Press Save. Changes are permanent now.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">db.rollback()</span> = Press Undo. All unsaved changes are cancelled.</span></div>
+      <div class="line"><div class="bullet g"></div><span>In my upload code — if Google Drive upload fails — I call rollback.</span></div>
+      <div class="line"><div class="bullet g"></div><span>This means no broken data is saved. The database stays correct.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q22</span><span class="qtext">How did you send emails in your project?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>Email notifications were part of the document — Week 6.</span></div>
+      <div class="line"><div class="bullet g"></div><span>I used Python's <strong>smtplib</strong> library to send emails through Gmail.</span></div>
+      <div class="line"><div class="bullet g"></div><span>When admin changes a claim status — Celery runs in the background.</span></div>
+      <div class="line"><div class="bullet g"></div><span>It finds the user's email from the database.</span></div>
+      <div class="line"><div class="bullet g"></div><span>It sends an email — "Your claim status is now [new status]."</span></div>
+      <div class="line"><div class="bullet g"></div><span>I used a <strong>Gmail App Password</strong> — a special password only for apps. Safer than the real password.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q23</span><span class="qtext">How did you handle errors in your API?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>When something goes wrong — I use <strong>HTTPException</strong> to send an error back.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">404</span> = Not found. Example — claim ID does not exist.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">403</span> = Not allowed. Example — user trying to open admin page.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">500</span> = Something broke on the server.</span></div>
+      <div class="line"><div class="bullet g"></div><span>The frontend reads this error code and shows the right message to the user.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q24</span><span class="qtext">What is the difference between GET, POST, and PUT?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet g"></div><span>These are ways the frontend sends requests to the backend.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">GET</span> = "Give me data." Nothing changes. Example — show all my claims.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">POST</span> = "Save new data." Example — file a new claim.</span></div>
+      <div class="line"><div class="bullet g"></div><span><span class="label g">PUT</span> = "Update existing data." Example — admin changes claim status.</span></div>
+      <div class="line"><div class="bullet g"></div><span>We always use the right method for the right action. That is the REST rule.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 3 ========== -->
+<div class="section" id="s3">
+  <div class="sec-head">
+    <div class="sec-icon bg-b">🗄️</div>
+    <div class="sec-title t-b">Database — PostgreSQL</div>
+    <div class="sec-count">10 Q</div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q25</span><span class="qtext">How many tables are in your database? What does each one store?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>The database schema was given in the project document. There are 9 tables.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Users</span> Name, email, password, age, and risk profile of each user.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Providers</span> Insurance company name and country.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Policies</span> Policy type, price, coverage, and deductible.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">UserPolicies</span> Which user bought which policy. Start and end date.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Claims</span> Each claim — amount, date, and current status.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">ClaimDocuments</span> Google Drive link of uploaded documents.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Recommendations</span> Score and reason for each suggested policy.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">FraudFlags</span> Which fraud rule was broken and how serious it is.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">AdminLogs</span> What actions the admin has done.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q26</span><span class="qtext">What is a foreign key? Give an example.</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>A foreign key connects one table to another table.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Think of Students list and Marks list. Each mark has a Student ID. That connects the mark to the student.</span></div>
+      <div class="line"><div class="bullet b"></div><span>That Student ID is a foreign key.</span></div>
+      <div class="line"><div class="bullet b"></div><span>In my project — Claims table has <strong>user_policy_id</strong>. This connects each claim to one user policy.</span></div>
+      <div class="line"><div class="bullet b"></div><span>You cannot file a claim without a valid policy. The foreign key enforces that.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q27</span><span class="qtext">What is JSONB? Why did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>JSONB stores flexible data inside one database column.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Like a small dictionary — different keys for different rows.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">risk_profile</span> Each user has different details — age, income, health, family size. These are not the same for everyone. So I store it all in one JSONB column.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">coverage</span> Each policy type covers different things. Health covers hospital. Travel covers flights. JSONB handles this flexibility.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Both were given in the schema in the project document.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q28</span><span class="qtext">What is the difference between primary key and unique key?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>Both stop duplicate values. But they are different.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Primary Key</span> Every table has exactly one. It identifies each row. It cannot be empty. In my tables — the <strong>id</strong> column is the primary key.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Unique Key</span> Stops duplicates in a column. But it is not the main identifier. Example — <strong>email</strong> in Users. No two users can have the same email.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q29</span><span class="qtext">What is CASCADE delete? Where did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>CASCADE delete means — if a parent row is deleted, child rows are also deleted automatically.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Simple example — delete a student, their marks are also deleted.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Without this — you get leftover marks with no student. That is bad data.</span></div>
+      <div class="line"><div class="bullet b"></div><span>In my project — if a UserPolicy is deleted, all its Claims are also deleted.</span></div>
+      <div class="line"><div class="bullet b"></div><span>If a Claim is deleted, its FraudFlags and ClaimDocuments are also deleted.</span></div>
+      <div class="line"><div class="bullet b"></div><span>The database stays clean. No leftover data.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q30</span><span class="qtext">What is an ORM? Why is it better than writing SQL?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>ORM lets me use Python to talk to the database. No SQL needed.</span></div>
+      <div class="line"><div class="bullet b"></div><span>I used <strong>SQLAlchemy</strong> as my ORM.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Reason 1</span> Code is easier to read. Python is cleaner than SQL mixed in strings.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Reason 2</span> It is safer. It protects from hacker tricks like SQL injection automatically.</span></div>
+      <div class="line"><div class="bullet b"></div><span><span class="label b">Reason 3</span> If I switch databases later — very little code changes needed.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q31</span><span class="qtext">What is a JOIN? Did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>JOIN gets data from two connected tables at the same time.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Example — you want a student's name AND their marks. Name is in one table. Marks in another. JOIN combines them.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Yes. I used JOIN in my project.</span></div>
+      <div class="line"><div class="bullet b"></div><span>To get claims for the current user — I joined Claims with UserPolicies.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Claims table does not have user_id directly. UserPolicies has it. So I JOIN them to filter by user.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q32</span><span class="qtext">Why did you use server_default=func.now() for timestamps?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>This tells the database — "fill in the current time automatically when a row is saved."</span></div>
+      <div class="line"><div class="bullet b"></div><span>I do not have to send the time from Python.</span></div>
+      <div class="line"><div class="bullet b"></div><span>The database server's own clock is used. It is always accurate and consistent.</span></div>
+      <div class="line"><div class="bullet b"></div><span>I used this in Claims, ClaimDocuments, FraudFlags, and AdminLogs.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q33</span><span class="qtext">Why did you use NUMERIC instead of float for money?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>Money needs exact values. Example — ₹5,250.75 exactly.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Float type sometimes stores ₹5,250.74999 because of how computers handle decimals.</span></div>
+      <div class="line"><div class="bullet b"></div><span>That small error looks tiny. But when you add money for thousands of users — the errors add up.</span></div>
+      <div class="line"><div class="bullet b"></div><span>NUMERIC(12, 2) stores the exact value. Always 2 decimal places. No rounding error.</span></div>
+      <div class="line"><div class="bullet b"></div><span>This is the standard way to store money in any database.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q34</span><span class="qtext">What does the Recommendations table store?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet b"></div><span>When a user asks for recommendations — the engine scores all policies.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Each score and reason is saved in the Recommendations table.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Before saving new ones — old ones are deleted. Data stays fresh.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Top 5 by score are shown to the user.</span></div>
+      <div class="line"><div class="bullet b"></div><span>Admin can also check this table to see what was suggested to each user.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 4 ========== -->
+<div class="section" id="s4">
+  <div class="sec-head">
+    <div class="sec-icon bg-r">🔐</div>
+    <div class="sec-title t-r">Login &amp; Security — JWT</div>
+    <div class="sec-count">8 Q</div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q35</span><span class="qtext">What is JWT? How does it work in your project?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>JWT was mentioned in the project document. It stands for JSON Web Token.</span></div>
+      <div class="line"><div class="bullet"></div><span>It is a way to verify who the user is. Without checking the database every time.</span></div>
+      <div class="line"><div class="bullet"></div><span>Think of it like a concert pass. Once you have the pass — the guard just checks the pass. No need to call the ticket office each time.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 1</span> User logs in with email and password.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 2</span> Backend checks. If correct — it creates a JWT token and sends it.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 3</span> Frontend saves this token. Sends it with every future request.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 4</span> Backend reads the token, verifies it, and knows who the user is.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q36</span><span class="qtext">What are the 3 parts of a JWT token?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>A JWT token looks like this — <strong>aaaaa.bbbbb.ccccc</strong></span></div>
+      <div class="line"><div class="bullet"></div><span>Three parts. Each separated by a dot.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Part 1 Header</span> Says which method was used. I used HS256.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Part 2 Payload</span> Has user info — email and expiry time. Readable but cannot be changed without being caught.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Part 3 Signature</span> Made using a secret key only my server knows. If anyone changes the token — signature breaks. Backend rejects it.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q37</span><span class="qtext">How did you store passwords safely?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I never stored the real password in the database.</span></div>
+      <div class="line"><div class="bullet"></div><span>I stored a hashed version.</span></div>
+      <div class="line"><div class="bullet"></div><span>Hashing converts the password into a scrambled string. It cannot be reversed.</span></div>
+      <div class="line"><div class="bullet"></div><span>Example — "hello123" becomes "x9q$2mK#r..." — no one can go back to "hello123".</span></div>
+      <div class="line"><div class="bullet"></div><span>I used <strong>bcrypt</strong> for hashing. It is very safe and popular.</span></div>
+      <div class="line"><div class="bullet"></div><span>When user logs in — I hash what they typed and compare with the stored hash. If they match — login allowed.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q38</span><span class="qtext">When does the JWT token expire? What happens after?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>The token expires after <strong>30 minutes</strong>.</span></div>
+      <div class="line"><div class="bullet"></div><span>I set this in the code — ACCESS_TOKEN_EXPIRE_MINUTES = 30.</span></div>
+      <div class="line"><div class="bullet"></div><span>After 30 minutes — if the user tries anything — the backend rejects it.</span></div>
+      <div class="line"><div class="bullet"></div><span>It sends a 401 error. That means "you are not logged in."</span></div>
+      <div class="line"><div class="bullet"></div><span>The user has to log in again to get a new token.</span></div>
+      <div class="line"><div class="bullet"></div><span>The document mentioned refresh tokens too. That is the next improvement I would add.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q39</span><span class="qtext">What is OAuth2? How did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>OAuth2 lets one app get permission to use another service. Without sharing your password.</span></div>
+      <div class="line"><div class="bullet"></div><span>I used it in 2 places.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">For Login</span> FastAPI's OAuth2PasswordBearer reads the JWT token from each request. Gives it to my code.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">For Google Drive</span> First time — browser opens. Asks "allow this app to use your Drive?" After yes — credentials are saved in token.pickle. No more browser popups after that.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q40</span><span class="qtext">How did you handle admin access?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I made a function called <strong>admin_only</strong>.</span></div>
+      <div class="line"><div class="bullet"></div><span>It checks — is the logged-in user's email the same as the admin email?</span></div>
+      <div class="line"><div class="bullet"></div><span>If yes — allowed. If no — 403 error. "Admin access required."</span></div>
+      <div class="line"><div class="bullet"></div><span>All admin APIs use this check.</span></div>
+      <div class="line"><div class="bullet"></div><span>I know checking by hardcoded email is not ideal for a big app. A better way is to store a role in the database. That is what I would improve next.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q41</span><span class="qtext">What is the difference between authentication and authorization?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>These two sound similar. But they are different.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Authentication</span> = "Who are you?" — Checking email and password at login. You get a JWT token after this.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Authorization</span> = "What can you do?" — Even after login, not everyone can open the admin page. Only admin is allowed.</span></div>
+      <div class="line"><div class="bullet"></div><span>Easy way to remember it — authentication is about identity. Authorization is about permission.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q42</span><span class="qtext">Are there any security issues in your project?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>Yes. I will be honest.</span></div>
+      <div class="line"><div class="bullet"></div><span>The JWT secret key is written in the code directly. It should be in a private environment file.</span></div>
+      <div class="line"><div class="bullet"></div><span>The Gmail password is also in the code. Same problem.</span></div>
+      <div class="line"><div class="bullet"></div><span>Admin is checked by hardcoded email. Should be a role in the database.</span></div>
+      <div class="line"><div class="bullet"></div><span>These are fine for an internship learning project. But not for a real production app.</span></div>
+      <div class="line"><div class="bullet"></div><span>I am aware of these. I know how to fix them. That is what I would do next.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 5 ========== -->
+<div class="section" id="s5">
+  <div class="sec-head">
+    <div class="sec-icon bg-p">☁️</div>
+    <div class="sec-title t-p">Google Drive &amp; File Uploads</div>
+    <div class="sec-count">6 Q</div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q43</span><span class="qtext">The document says AWS S3. Why did you use Google Drive?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>Yes. The project document from Infosys Springboard mentioned AWS S3.</span></div>
+      <div class="line"><div class="bullet"></div><span>I made only this one change — I used Google Drive instead.</span></div>
+      <div class="line"><div class="bullet"></div><span>Reason — AWS S3 needs a credit card. It has a cost. I am a student.</span></div>
+      <div class="line"><div class="bullet"></div><span>Google Drive is completely free. It has 15 GB. Enough for a development project.</span></div>
+      <div class="line"><div class="bullet"></div><span>The logic is exactly the same — upload file, get a link, save link in database.</span></div>
+      <div class="line"><div class="bullet"></div><span>I achieved the same goal. This is the only change from the document.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q44</span><span class="qtext">What happens step by step when a user uploads a file?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 1</span> User picks a file and clicks Upload.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 2</span> React sends the file to FastAPI.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 3</span> FastAPI checks — does this claim belong to this user? If no — 404 error.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 4</span> File is saved temporarily on the server.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 5</span> My code uploads this temp file to Google Drive.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 6</span> Google Drive gives back a file ID. My code makes it public and creates a shareable link.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 7</span> This link is saved in the ClaimDocuments table in the database.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 8</span> Temp file on the server is deleted. Always — even if something went wrong.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 9</span> The link is sent back to React as the response.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q45</span><span class="qtext">What is token.pickle?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>token.pickle is a file that saves the Google login credentials.</span></div>
+      <div class="line"><div class="bullet"></div><span>First time the app runs — browser opens. Google asks "allow this app?"</span></div>
+      <div class="line"><div class="bullet"></div><span>After you click Yes — Google gives credentials. My code saves them to token.pickle.</span></div>
+      <div class="line"><div class="bullet"></div><span>Next time — the app reads from this file. No browser popup again.</span></div>
+      <div class="line"><div class="bullet"></div><span>If credentials expire — it auto-refreshes. No manual step needed.</span></div>
+      <div class="line"><div class="bullet"></div><span>User only gives permission once. Everything after is automatic.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q46</span><span class="qtext">Why did you use a finally block in the upload code?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>The finally block runs always — whether the upload worked or failed.</span></div>
+      <div class="line"><div class="bullet"></div><span>When a user uploads a file — I save it as a temp file on the server first.</span></div>
+      <div class="line"><div class="bullet"></div><span>After uploading to Google Drive — I must delete this temp file.</span></div>
+      <div class="line"><div class="bullet"></div><span>If I forget to delete — the server fills up with leftover files slowly.</span></div>
+      <div class="line"><div class="bullet"></div><span>I put the delete code inside finally. So it always runs. No matter what.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q47</span><span class="qtext">What Google Drive permission did you use? Why?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I used the scope <strong>drive.file</strong>.</span></div>
+      <div class="line"><div class="bullet"></div><span>This means — my app can only see files that it uploaded itself.</span></div>
+      <div class="line"><div class="bullet"></div><span>It cannot see the user's personal photos or documents.</span></div>
+      <div class="line"><div class="bullet"></div><span>This is safer. My app only gets the minimum permission it needs.</span></div>
+      <div class="line"><div class="bullet"></div><span>If I used full Drive access — that would be a privacy risk. I avoided that.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q48</span><span class="qtext">What does resumable=True mean in your upload code?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>Resumable means — if internet breaks during upload — it continues from where it stopped.</span></div>
+      <div class="line"><div class="bullet"></div><span>Without this — if internet breaks at 70% — file upload starts from 0% again.</span></div>
+      <div class="line"><div class="bullet"></div><span>With resumable=True — it continues from 70%.</span></div>
+      <div class="line"><div class="bullet"></div><span>Claim documents are sometimes large scanned PDFs.</span></div>
+      <div class="line"><div class="bullet"></div><span>Resumable makes the upload more reliable for large files.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 6 ========== -->
+<div class="section" id="s6">
+  <div class="sec-head">
+    <div class="sec-icon bg-o">⚛️</div>
+    <div class="sec-title t-o">Frontend — React.js</div>
+    <div class="sec-count">7 Q</div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q49</span><span class="qtext">What pages did you build in React?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I built 9 pages.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Login</span> Enter email and password to log in.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Signup</span> Create a new account.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Policies</span> See all available insurance policies.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Compare</span> Compare two or more policies side by side.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Risk Profile</span> Fill in age, income, family size, health condition.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Recommendations</span> See top 5 best policies for you.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Upload Claim</span> Upload documents for a claim.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">My Claims</span> See all your filed claims and their status.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label o" style="background:rgba(240,150,60,0.12);border-color:rgba(240,150,60,0.3);color:#f0963c">Admin Dashboard</span> Only for admin. See all claims, fraud flags, and export reports.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q50</span><span class="qtext">What is React Router?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>React Router lets the user go between pages without full browser reload.</span></div>
+      <div class="line"><div class="bullet"></div><span>Normal website — you click a link — browser downloads a whole new page. Slow.</span></div>
+      <div class="line"><div class="bullet"></div><span>With React Router — React just shows a different component. Very fast. No reload.</span></div>
+      <div class="line"><div class="bullet"></div><span>In my App.js — I defined the routes. /login shows Login page. /policies shows Policies page. And so on.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q51</span><span class="qtext">How does the frontend talk to the backend?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>The frontend uses the fetch function to send HTTP requests to the backend.</span></div>
+      <div class="line"><div class="bullet"></div><span>Example — My Claims page opens. React calls <strong>fetch("http://localhost:8000/claims/")</strong>.</span></div>
+      <div class="line"><div class="bullet"></div><span>Before sending — it adds the JWT token to the request. Like an ID card.</span></div>
+      <div class="line"><div class="bullet"></div><span>Backend receives the request. Finds the claims for that user. Sends back the list.</span></div>
+      <div class="line"><div class="bullet"></div><span>React saves the list and shows it on the screen.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q52</span><span class="qtext">What is the difference between state and props?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>Both store data. But they are different.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">State</span> Data that belongs to this component. It can change. When it changes — screen updates automatically. Example — the list of claims I fetched from the backend.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Props</span> Data given to this component by its parent. Cannot be changed. Just read. Example — parent page gives one claim to a ClaimCard component.</span></div>
+      <div class="line"><div class="bullet"></div><span>Simple rule — State is your own. Props is given by someone else.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q53</span><span class="qtext">What is useEffect? Where did you use it?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>useEffect runs code when the page first loads.</span></div>
+      <div class="line"><div class="bullet"></div><span>I used it on every page that needs data from the backend.</span></div>
+      <div class="line"><div class="bullet"></div><span>Example — Policies page opens. useEffect runs. It calls GET /policies API. Gets the list. Saves in state. React shows the policies on screen.</span></div>
+      <div class="line"><div class="bullet"></div><span>Without useEffect — the page opens empty. No data. Because React does not know when to fetch.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q54</span><span class="qtext">What does the Admin Dashboard show?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>Only the admin can see this page.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Summary</span> Total users, claims, fraud flags, premium collected, amount claimed.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">All Claims</span> Full list with documents and fraud flags for each.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Update Status</span> Admin can change claim status. User gets email automatically via Celery.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Export CSV</span> Download all claims as a spreadsheet file.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q55</span><span class="qtext">What is a component in React?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>A component is one small piece of a web page.</span></div>
+      <div class="line"><div class="bullet"></div><span>Think of a web page like a house made of Lego blocks. Each block is a component.</span></div>
+      <div class="line"><div class="bullet"></div><span>Login page is one component. Policies page is another.</span></div>
+      <div class="line"><div class="bullet"></div><span>Each component has its own code and its own data.</span></div>
+      <div class="line"><div class="bullet"></div><span>Big benefit — I can reuse a component. Write once. Use in many pages.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 7 ========== -->
+<div class="section" id="s7">
+  <div class="sec-head">
+    <div class="sec-icon bg-t">🤝</div>
+    <div class="sec-title t-t">Internship &amp; Soft Skills</div>
+    <div class="sec-count">6 Q</div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q56</span><span class="qtext">How was your internship organized?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>This was an Infosys Springboard internship.</span></div>
+      <div class="line"><div class="bullet"></div><span>My mentor gave me a full project document at the start.</span></div>
+      <div class="line"><div class="bullet"></div><span>The document had everything — what modules to build, what tables to make, what technologies to use, and a week-by-week plan.</span></div>
+      <div class="line"><div class="bullet"></div><span>Every day we had a short meeting. I said 3 things — what I finished, what I will do today, and if I have any problem.</span></div>
+      <div class="line"><div class="bullet"></div><span>This type of meeting is called a stand-up meeting. Real software teams do this.</span></div>
+      <div class="line"><div class="bullet"></div><span>I could ask my mentor or team for help anytime. But I tried to solve things myself first.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q57</span><span class="qtext">How did you handle problems when you were stuck?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I followed a simple process.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 1</span> Try to solve myself. Read the documentation. Search the error online.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 2</span> If still stuck — bring it to the daily meeting.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">Step 3</span> Explain clearly — what I tried, what error I got, what I do not understand.</span></div>
+      <div class="line"><div class="bullet"></div><span>My mentor or team member would then guide me.</span></div>
+      <div class="line"><div class="bullet"></div><span>I learned — asking for help is not a weakness. Asking clearly is actually a good skill.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q58</span><span class="qtext">What did you learn from this internship?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I learned many things.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Technical</span> How to build a full stack app. How frontend and backend work together. How to design database tables. How JWT works. How to connect Google Drive. How to send emails with Celery. How fraud detection works.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label g">Professional</span> How to follow a project document. How to break big work into weekly tasks. How to give updates in daily meetings. How to manage my own time.</span></div>
+      <div class="line"><div class="bullet"></div><span>Most important thing I learned — real projects have unexpected problems. Staying calm and finding solutions is as important as knowing the technology.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q59</span><span class="qtext">This was an individual project. How did you manage alone?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>The week-by-week plan helped a lot. I always knew what to do next.</span></div>
+      <div class="line"><div class="bullet"></div><span>I focused on one module at a time. I did not try to do everything at once.</span></div>
+      <div class="line"><div class="bullet"></div><span>First login. Then policies. Then recommendations. Then claims. Then fraud. Then admin.</span></div>
+      <div class="line"><div class="bullet"></div><span>The daily meetings also helped. I was never fully alone.</span></div>
+      <div class="line"><div class="bullet"></div><span>Building alone gave me the full picture of how the whole app works. That is a strong learning.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q60</span><span class="qtext">What are the improvements you would make?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I can think of 5 improvements.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">1</span> Replace Google Drive with AWS S3 — as the document originally said. Now that I understand the concept, I can do it.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">2</span> Move secret keys and passwords out of the code. Put them in a private environment file.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">3</span> Add a proper role column — admin or user — in the database. Remove the hardcoded email check.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">4</span> Write automated tests. So any code change can be checked quickly.</span></div>
+      <div class="line"><div class="bullet"></div><span><span class="label">5</span> Deploy on a real server. So anyone can use it from the internet.</span></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-q"><span class="qnum">Q61</span><span class="qtext">Why should we hire you?</span><span class="arrow">▼</span></div>
+    <div class="card-a">
+      <div class="line"><div class="bullet"></div><span>I followed a real project document and built a complete working app. That is what happens in a real job.</span></div>
+      <div class="line"><div class="bullet"></div><span>I built frontend, backend, database, file upload, fraud detection, email, and admin dashboard — all by myself.</span></div>
+      <div class="line"><div class="bullet"></div><span>I did not just copy code. I understand why each decision was made.</span></div>
+      <div class="line"><div class="bullet"></div><span>I also made one practical decision — replaced AWS S3 with Google Drive because of cost. Same result. Smart solution.</span></div>
+      <div class="line"><div class="bullet"></div><span>I am a fresher. I do not know everything. But I can learn fast.</span></div>
+      <div class="line"><div class="bullet"></div><span>I can follow instructions. I can solve problems. I can ask for help correctly.</span></div>
+      <div class="line"><div class="bullet"></div><span>I will give full effort every day. I am ready to grow.</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<footer>
+  Infosys Springboard Internship — CoverMate Insurance Project &nbsp;·&nbsp; Click any question to open the answer &nbsp;·&nbsp; All the best! 🎯
+</footer>
+
+<script>
+  function toggle(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
